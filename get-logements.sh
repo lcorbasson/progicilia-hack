@@ -338,8 +338,11 @@ make_history() {
 }
 
 
+pushd "$DATADIR" > /dev/null
+
 show_data
 
 make_history
 
+popd > /dev/null
 
