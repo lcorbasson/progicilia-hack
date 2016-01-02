@@ -330,7 +330,7 @@ show_data() {
 make_history() {
 
 	(
-		echo '['
+		echo '{'
 		ls data_*.json | sort -r | while read f; do
 			date="$(echo "$f" | sed -e 's,^data_\(.*\)\.json$,\1,' -e 's,^\([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\)_\([0-9][0-9]\)-\([0-9][0-9]\)$,\1 \2:\3,')"
 			size="$(ls -al "$f" | cut -f5 -d' ')"
@@ -343,8 +343,8 @@ make_history() {
 				echo "\"no data in $f\""
 			fi
 		done
-		echo ']'
-	) | tee debug.json | jq . > history.json
+		echo '}'
+	) | jq . > history.json
 
 }
 
