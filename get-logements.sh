@@ -26,19 +26,30 @@ dodo() {
 }
 
 
+curly() {
+
+	if [ -t 1 ]; then
+		curl --compressed "$@"
+	else
+		curl -s --compressed "$@"
+	fi
+
+}
+
+
 replay_session() {
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "Upgrade-Insecure-Requests: 1" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/authentification/index/index" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/accueil/accueil
-	
+
 	dodo
-	
-	curl -s --compressed -X POST -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X POST -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "Origin: http://$PROGICILIA" \
 			-H "Accept-Encoding: gzip, deflate" -H "Host: $PROGICILIA" \
 			-H "Upgrade-Insecure-Requests: 1" \
@@ -48,262 +59,262 @@ replay_session() {
 			-H "Content-Type: application/x-www-form-urlencoded" \
 			-H "Content-Length: 32" --data-urlencode "login=$USER" --data-urlencode "password=$PASSWD" \
 			http://$PROGICILIA/authentification/index/index
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/library/bootstrap-3.1.1/css/bootstrap.css
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/library/font-awesome/css/font-awesome.css
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/library/nanobar.js
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/images/commun/icon-ma-demande.png > /dev/null
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/images/commun/icon-annuler-ma-demande.png > /dev/null
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/images/commun/icon-mes-propositions.png > /dev/null
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/images/commun/icon-mon-dossier.png > /dev/null
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/images/commun/icon-documents.png > /dev/null
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/images/commun/icon-consulter-les-offres.png > /dev/null
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/library/jquery/jquery-1.11.0.min.js
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/library/bootstrap-3.1.1/js/bootstrap.js
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/library/bootstrap-table-master/src/bootstrap-table.js
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/library/bootstrap-table-master/src/locale/bootstrap-table-fr-FR.js
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/library/bootstrap-table-master/extensions/cookie/bootstrap-table-cookie.js
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/library/bootstrap-datepicker/js/bootstrap-datepicker.js
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/library/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr.js
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/js/edemande.js
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/js/commun/commun.js
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/library/sweetalert/lib/sweet-alert.js
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/library/bootstrap-filestyle.min.js
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/js/accueil.js
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/library/bootstrap-3.1.1/css/bootstrap.css" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/images/commun/bandeau.png > /dev/null
-	
+
 	dodo
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "Origin: http://$PROGICILIA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/library/font-awesome/css/font-awesome.css" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/accueil/accueil
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/library/jquery/jquery-1.11.0.min.js
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "Origin: http://$PROGICILIA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/library/font-awesome/css/font-awesome.css" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/library/font-awesome/fonts/fontawesome-webfont.woff2?v=4.3.0 > /dev/null
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/library/sweetalert/lib/sweet-alert.js
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "Origin: http://$PROGICILIA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/library/font-awesome/css/font-awesome.css" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/library/font-awesome/fonts/fontawesome-webfont.woff?v=4.3.0 > /dev/null
-	
+
 	dodo
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "Upgrade-Insecure-Requests: 1" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/offrelogement/index/
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "Origin: http://$PROGICILIA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/library/font-awesome/css/font-awesome.css" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/accueil/accueil
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "Origin: http://$PROGICILIA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/library/font-awesome/css/font-awesome.css" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/library/font-awesome/fonts/fontawesome-webfont.woff2?v=4.3.0 > /dev/null
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "Origin: http://$PROGICILIA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/library/font-awesome/css/font-awesome.css" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/library/font-awesome/fonts/fontawesome-webfont.woff?v=4.3.0 > /dev/null
-	
+
 	dodo
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "Upgrade-Insecure-Requests: 1" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/offrelogement/index/deleteCache/delete" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/offrelogement/index/deleteCache/delete
-	
+
 	dodo
-	
-	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+
+	curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "Origin: http://$PROGICILIA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/library/font-awesome/css/font-awesome.css" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/accueil/accueil
-	
+
 }
 
 
 show_data() {
 
 	replay_session | tee session.txt | sort -u | sed -ne 's,.* data-url="\([^"]*\)".*,\1,p' | while read datafile; do
-		curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
+		curly -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 				-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
 				-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 				-H "Referer: http://$PROGICILIA/offrelogement/index" \
