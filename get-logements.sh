@@ -43,9 +43,9 @@ replay_session() {
 			-H "Accept-Encoding: gzip, deflate" -H "Host: $PROGICILIA" \
 			-H "Upgrade-Insecure-Requests: 1" \
 			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
-			-H "Content-Type: application/x-www-form-urlencoded" \
 			-H "Referer: http://$PROGICILIA/authentification/index/index" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
+			-H "Content-Type: application/x-www-form-urlencoded" \
 			-H "Content-Length: 32" --data-urlencode "login=$USER" --data-urlencode "password=$PASSWD" \
 			http://$PROGICILIA/authentification/index/index
 	
@@ -247,7 +247,8 @@ replay_session() {
 	
 	curl -s --compressed -X GET -b cookies.txt -c cookies.txt -H "$PARAM_PRAGMA" \
 			-H "$PARAM_ENCODING" -H "Host: $PROGICILIA" \
-			-H "Upgrade-Insecure-Requests: 1" -H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
+			-H "Upgrade-Insecure-Requests: 1" \
+			-H "$PARAM_LANGUAGE" -H "$PARAM_USERAGENT" -H "$PARAM_ACCEPT" \
 			-H "Referer: http://$PROGICILIA/accueil/accueil" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			http://$PROGICILIA/offrelogement/index/
@@ -319,7 +320,7 @@ make_history() {
 
 	(
 		echo '{'
-		for f in data_*.json; do
+		ls data_*.json | sort -r | while read f; do
 			date="$(echo "$f" | sed -e 's,^data_\(.*\)\.json$,\1,' -e 's,^\([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\)_\([0-9][0-9]\)-\([0-9][0-9]\)$,\1 \2:\3,')"
 			size="$(ls -al "$f" | cut -f5 -d' ')"
 			[ "$first" == "no" ] && echo ','
