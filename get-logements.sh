@@ -119,5 +119,24 @@ show_data() {
 }
 
 
-show_data
+make_history() {
+
+	echo '{'
+	for f in data_*.json; do
+		date="${f#data_}"
+		date="${date%.json}"
+		[ "$first" == "no" ] && echo ','
+		first="no"
+		echo "\"$date\":"
+		cat "$f"
+	done
+	echo '}'
+
+}
+
+
+#show_data
+
+make_history | jq . > history.json
+
 
