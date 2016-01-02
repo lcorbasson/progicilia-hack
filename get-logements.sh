@@ -1,4 +1,11 @@
 #!/bin/bash
+check_prerequisites() {
+	for command in cat curl dirname jq sed sleep sort tee; do
+		[ -z "$(which "$command")" ] && echo "$command is required; aborting." >&2 && exit 254
+	done
+}
+check_prerequisites
+
 
 NOW="$(date +"%Y-%m-%d_%H-%M")"
 
@@ -15,6 +22,7 @@ PP_LUA="-H \"$PARAM_LANGUAGE\" -H \"$PARAM_USERAGENT\" -H \"$PARAM_ACCEPT\""
 PP_CC="-H \"$PARAM_CONNECTION\" -H \"$PARAM_CACHE\""
 
 SLEEP=4
+
 
 . "$(dirname "$0")/credentials.sh"
 
