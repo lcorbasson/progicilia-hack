@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Progicilia-hack</title>
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
 <body>
     <h1>Latest data</h1>
@@ -14,6 +15,12 @@
     <script>
       $( document ).ready(function() {
         $.getJSON( "data.json", function( data ) {
+          for ( var i=0; i<data.length; i++ ) {
+            data[i].log_surface += " m²";
+            data[i].log_loyer_charge_comprise = new Intl.NumberFormat( 'fr-FR', { style: 'currency', currency: 'EUR' } ).format( data[i].log_loyer_charge_comprise ) + " / mois";
+            data[i].proximite_1 = new Intl.NumberFormat( 'fr-FR' ).format( Math.round( data[i].proximite_1 * 100 ) / 100 ) + " km";
+            data[i].idLogementCrypter = data[i].idLogementCrypter.replace( /\//g, '/\n' );
+          }
           $.jsontotable(data, { id: '#latest', header: true });
         });
       });
