@@ -1,0 +1,6 @@
+[submodule "jquery-jsontotable"]
+	path = ui/lib/src/jquery-jsontotable
+	url = https://github.com/jongha/jquery-jsontotable.git
+[submodule "jquery"]
+	path = ui/lib/src/jquery
+	url = https://github.com/jquery/jquery.git
