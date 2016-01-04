@@ -6,6 +6,9 @@ check_prerequisites() {
 }
 check_prerequisites
 
+if [ "$1" == "--quiet" ]; then
+	exec > /dev/null
+fi
 
 NOW="$(date +"%Y-%m-%d_%H-%M")"
 
