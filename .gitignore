@@ -1,5 +1,2 @@
 credentials.sh
-cookies.txt
-session.txt
-data*.json
-history.json
+data/
