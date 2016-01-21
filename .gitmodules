@@ -4,3 +4,4 @@
 [submodule "jquery"]
 	path = ui/lib/src/jquery
 	url = https://github.com/jquery/jquery.git
+	branch = 2.2-stable
