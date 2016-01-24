@@ -1,6 +1,6 @@
 #!/bin/bash
 check_prerequisites() {
-	for command in cat curl dirname jq sed sleep sort tee; do
+	for command in cat curl dirname jq realpath sed sleep sort tee; do
 		[ -z "$(which "$command")" ] && echo "$command is required; aborting." >&2 && exit 254
 	done
 }
@@ -27,7 +27,9 @@ PP_CC="-H \"$PARAM_CONNECTION\" -H \"$PARAM_CACHE\""
 SLEEP=4
 
 
-. "$(dirname "$0")/credentials.sh"
+. "$(dirname "$0")/settings.sh" || ( echo "Settings file not found; copy settings_template.sh to settings.sh and adapt the latter to your setup." >&2 && exit 252 )
+CREDENTIALSDIR="$(realpath "$CREDENTIALSDIR")"
+DATADIR="$(realpath "$DATADIR")"
 
 
 dodo() {
@@ -42,7 +44,7 @@ curly() {
 	if [ -t 1 ]; then
 		curl --compressed "$@"
 	else
-		curl -s --compressed "$@"
+		curl -s -S --compressed "$@"
 	fi
 
 }
@@ -68,7 +70,7 @@ replay_session() {
 			-H "Referer: http://$PROGICILIA/authentification/index/index" \
 			-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 			-H "Content-Type: application/x-www-form-urlencoded" \
-			-H "Content-Length: 32" --data-urlencode "login=$USER" --data-urlencode "password=$PASSWD" \
+			--data-urlencode "login@$CREDENTIALSDIR/login.txt" --data-urlencode "password@$CREDENTIALSDIR/password.txt" \
 			http://$PROGICILIA/authentification/index/index
 
 	curly -X GET -b "cookies.txt" -c "cookies.txt" -H "$PARAM_PRAGMA" \
@@ -355,7 +357,7 @@ make_history() {
 			fi
 		done
 		echo '}'
-	) | jq . > "history.json"
+	) > "history.json"
 
 }
 

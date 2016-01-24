@@ -2,8 +2,6 @@
 
 PROGICILIA="demandelogement.cgi.progicilia.fr"
 
-USER=""
-PASSWD=""
-
+CREDENTIALSDIR="$(dirname "$0")/credentials"
 DATADIR="$(dirname "$0")/data"
 

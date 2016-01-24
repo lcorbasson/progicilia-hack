@@ -1,2 +1,4 @@
-credentials.sh
+credentials/login.txt
+credentials/password.txt
 data/
+settings.sh
