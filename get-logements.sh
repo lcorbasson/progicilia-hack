@@ -1,6 +1,6 @@
 #!/bin/bash
 check_prerequisites() {
-	for command in cat curl dirname jq realpath sed sleep sort tee; do
+	for command in cat curl dirname gzip jq realpath sed sleep sort tar tee xz; do
 		[ -z "$(which "$command")" ] && echo "$command is required; aborting." >&2 && exit 254
 	done
 }
@@ -335,13 +335,14 @@ show_data() {
 				-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 				"http://$PROGICILIA$datafile?sort=log_loyer_charge_comprise&order=asc&limit=25&offset=0" \
 				| tee "latest.json" | jq .
-	done | tee "data_${NOW}.json"
+	done | tee "data_${NOW}.json" && xz -9 "session.txt"
 
 }
 
 
 make_history() {
 
+	[ -f "archive.tar.xz" ] && tar -Jxf "archive.tar.xz"
 	(
 		echo '{'
 		ls "data_"*".json" | sort -r | while read f; do
@@ -357,7 +358,8 @@ make_history() {
 			fi
 		done
 		echo '}'
-	) > "history.json"
+	) | gzip -9 > "history.json.gz"
+	tar -c "data_"*".json" | xz -9 > "archive.tar.xz" && rm "data_"*".json"
 
 }
 
