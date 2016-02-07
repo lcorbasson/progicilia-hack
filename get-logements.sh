@@ -335,14 +335,19 @@ show_data() {
 				-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 				"http://$PROGICILIA$datafile?sort=log_loyer_charge_comprise&order=asc&limit=25&offset=0" \
 				| tee "latest.json" | jq .
-	done | tee "data_${NOW}.json" && xz -9 "session.txt"
+	done | tee "data_${NOW}.json" && xz -9 -M "$MEMLIMIT" "session.txt"
 
 }
 
 
 make_history() {
 
-	[ -f "archive.tar.xz" ] && tar -Jxf "archive.tar.xz"
+	retar=0
+	if [ -f "archive.tar.xz" ]; then
+		tar -Jxf "archive.tar.xz" && retar=1
+	else
+		retar=1
+	fi
 	(
 		echo '{'
 		ls "data_"*".json" | sort -r | while read f; do
@@ -359,7 +364,7 @@ make_history() {
 		done
 		echo '}'
 	) | gzip -9 > "history.json.gz"
-	tar -c "data_"*".json" | xz -9 > "archive.tar.xz" && rm "data_"*".json"
+	[ "$retar" == 1 ] && tar -c "data_"*".json" | xz -9 -M "$MEMLIMIT" > "archive.tar.xz" && rm "data_"*".json"
 
 }
 
