@@ -335,7 +335,7 @@ show_data() {
 				-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 				"http://$PROGICILIA$datafile?sort=log_loyer_charge_comprise&order=asc&limit=25&offset=0" \
 				| tee "latest.json" | jq .
-	done | tee "data_${NOW}.json" && xz -9 -M "$MEMLIMIT" "session.txt"
+	done | tee "data_${NOW}.json" && ( rm -f "session.txt.xz"; xz -9 -M "$MEMLIMIT" "session.txt" )
 
 }
 
