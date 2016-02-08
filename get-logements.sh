@@ -1,6 +1,6 @@
 #!/bin/bash
 check_prerequisites() {
-	for command in cat curl dirname gzip jq realpath sed sleep sort tar tee xz; do
+	for command in cat curl dirname gzip jq realpath sed sleep sort tee; do
 		[ -z "$(which "$command")" ] && echo "$command is required; aborting." >&2 && exit 254
 	done
 }
@@ -9,6 +9,8 @@ check_prerequisites
 if [ "$1" == "--quiet" ]; then
 	exec > /dev/null
 fi
+
+
 
 NOW="$(date +"%Y-%m-%d_%H-%M")"
 
@@ -32,6 +34,7 @@ CREDENTIALSDIR="$(realpath "$CREDENTIALSDIR")"
 DATADIR="$(realpath "$DATADIR")"
 
 
+
 # Custom-made commands
 
 curly() {
@@ -48,6 +51,19 @@ curly() {
 dodo() {
 
 	sleep "$(($RANDOM%$SLEEP+$SLEEP))"
+
+}
+
+
+may() {
+
+	local command="$1"
+	shift
+	if [ -n "$(which "$command")" ]; then
+		"$command" "$@"
+	else
+		false
+	fi
 
 }
 
@@ -340,7 +356,7 @@ show_data() {
 				-H "$PARAM_CONNECTION" -H "$PARAM_CACHE" \
 				"http://$PROGICILIA$datafile?sort=log_loyer_charge_comprise&order=asc&limit=25&offset=0" \
 				| tee "latest.json" | jq .
-	done | tee "data_${NOW}.json" && ( rm -f "session.txt.xz"; xz -q -9 -M "$MEMLIMIT" "session.txt" )
+	done | tee "data_${NOW}.json" && ( rm -f "session.txt.xz"; may xz -q -9 -M "$MEMLIMIT" "session.txt" )
 
 }
 
@@ -349,7 +365,9 @@ make_history() {
 
 	retar=0
 	if [ -f "archive.tar.xz" ]; then
-		tar -Jxf "archive.tar.xz" && retar=1
+		may tar -Jxf "archive.tar.xz" && retar=1
+	elif [ -f "archive.tar" ]; then
+		may tar -xf "archive.tar" && retar=1
 	else
 		retar=1
 	fi
@@ -369,9 +387,10 @@ make_history() {
 		done
 		echo '}'
 	) | gzip -9 > "history.json.gz"
-	[ "$retar" == 1 ] && tar -c "data_"*".json" | xz -q -9 -M "$MEMLIMIT" > "archive.tar.xz" && rm "data_"*".json"
+	[ "$retar" == 1 ] && may tar -cf "archive.tar" "data_"*".json" && ( rm -f "archive.tar.xz"; may xz -q -9 -M "$MEMLIMIT" "archive.tar" ) && rm "data_"*".json"
 
 }
+
 
 
 mkdir -p "$DATADIR" || ( echo "Failed to create $DATADIR; aborting;" >&2 && exit 253 )
