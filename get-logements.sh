@@ -32,12 +32,7 @@ CREDENTIALSDIR="$(realpath "$CREDENTIALSDIR")"
 DATADIR="$(realpath "$DATADIR")"
 
 
-dodo() {
-
-	sleep "$(($RANDOM%$SLEEP+$SLEEP))"
-
-}
-
+# Custom-made commands
 
 curly() {
 
@@ -49,6 +44,16 @@ curly() {
 
 }
 
+
+dodo() {
+
+	sleep "$(($RANDOM%$SLEEP+$SLEEP))"
+
+}
+
+
+
+# Main script parts
 
 replay_session() {
 
