@@ -375,7 +375,7 @@ make_history() {
 		echo '{'
 		ls "data_"*".json" | sort -r | while read f; do
 			date="$(echo "$f" | sed -e 's,.*/data_\(.*\)\.json$,\1,' -e 's,^\([0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]\)_\([0-9][0-9]\)-\([0-9][0-9]\)$,\1 \2:\3,')"
-			size="$(ls -al "$f" | cut -f5 -d' ')"
+			size="$(ls -an "$f" | cut -f5 -d' ')"
 			[ "$first" == "no" ] && echo ','
 			first="no"
 			echo -n "\"$date\": "
